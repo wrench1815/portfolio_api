@@ -35,4 +35,6 @@ urlpatterns = [
     path('user/',
          UViews.UserListCreateAPIView.as_view(),
          name='user_list_create'),
+    path('user/<int:pk>/', UViews.UserRetrieve.as_view(),
+         name='user-retrieve'),
 ]

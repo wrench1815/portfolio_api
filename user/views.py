@@ -84,3 +84,13 @@ class UserListCreateAPIView(generics.ListCreateAPIView):
         logger.info(response)
 
         return Response(response, status=status.HTTP_201_CREATED)
+
+
+class UserRetrieve(generics.RetrieveAPIView):
+    '''
+        Return user of id passed
+    '''
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    lookup_field = 'pk'
