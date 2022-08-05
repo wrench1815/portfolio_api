@@ -12,6 +12,9 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 # User
 from user import views as UViews
 
+# Blog
+from blog import views as BViews
+
 urlpatterns = [
     # Auth Routes
     path('auth/token/',
@@ -37,4 +40,12 @@ urlpatterns = [
          name='user_list_create'),
     path('user/<int:pk>/', UViews.UserRetrieve.as_view(),
          name='user-retrieve'),
+
+    # Blog Routes
+    path('blog/',
+         BViews.PostListCreateAPIView.as_view(),
+         name='post_list_create'),
+    path('blog/<int:pk>/',
+         BViews.PostRetrieveUpdateDestroyAPIView.as_view(),
+         name='post_retrieve_update_destroy'),
 ]
