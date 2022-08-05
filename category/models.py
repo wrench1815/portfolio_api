@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -16,6 +17,8 @@ class Category(models.Model):
         max_length=100,
         editable=False,
     )
+
+    date_created = models.DateTimeField(default=timezone.now, )
 
     class Meta:
         """Meta definition for Category."""
