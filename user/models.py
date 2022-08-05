@@ -2,9 +2,16 @@ from django.db import models
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 from .managers import UserManager
+
+GENDER_CHOICES = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+    ('Rather not Say', 'Rather not Say'),
+)
 
 
 class user(AbstractBaseUser, PermissionsMixin):
@@ -13,28 +20,48 @@ class user(AbstractBaseUser, PermissionsMixin):
         max_length=30,
         unique=True,
     )
-    email = models.EmailField(_('email address'), blank=True)
+
+    email = models.EmailField(
+        _('email address'),
+        blank=True,
+    )
+
     first_name = models.CharField(
         _('first name'),
         max_length=30,
         blank=True,
     )
+
     last_name = models.CharField(
         _('last name'),
         max_length=30,
         blank=True,
     )
+
     date_created = models.DateTimeField(
         _('date created'),
-        auto_now_add=True,
+        default=timezone.now,
     )
-    is_active = models.NullBooleanField(
-        _('active'),
-        default=True,
-    )
+
     avatar = models.URLField(
         _('avatar'),
         blank=True,
+    )
+
+    gender = models.CharField(
+        max_length=15,
+        choices=GENDER_CHOICES,
+        default='Male',
+    )
+
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
+    )
+
+    is_staff = models.BooleanField(
+        _('staff'),
+        default=False,
     )
 
     objects = UserManager()
