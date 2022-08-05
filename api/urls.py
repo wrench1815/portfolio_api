@@ -10,10 +10,13 @@ from rest_framework_simplejwt.views import (
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView, SpectacularJSONAPIView
 
 # User
-from user import views as UViews
+from user import views as UserViews
 
 # Blog
-from blog import views as BViews
+from blog import views as BlogViews
+
+# Category
+from category import views as CategoryViews
 
 urlpatterns = [
     # Auth Routes
@@ -36,16 +39,25 @@ urlpatterns = [
 
     # User Routes
     path('user/',
-         UViews.UserListCreateAPIView.as_view(),
+         UserViews.UserListCreateAPIView.as_view(),
          name='user_list_create'),
-    path('user/<int:pk>/', UViews.UserRetrieve.as_view(),
+    path('user/<int:pk>/',
+         UserViews.UserRetrieve.as_view(),
          name='user-retrieve'),
 
     # Blog Routes
     path('blog/',
-         BViews.PostListCreateAPIView.as_view(),
+         BlogViews.PostListCreateAPIView.as_view(),
          name='post_list_create'),
     path('blog/<int:pk>/',
-         BViews.PostRetrieveUpdateDestroyAPIView.as_view(),
+         BlogViews.PostRetrieveUpdateDestroyAPIView.as_view(),
          name='post_retrieve_update_destroy'),
+
+    # Category Routes
+    path('category/',
+         CategoryViews.CategoryListCreateAPIView.as_view(),
+         name='category_list_create'),
+    path('category/<int:pk>/',
+         CategoryViews.CategoryRetrieveUpdateAPIView.as_view(),
+         name='category_retrieve_update'),
 ]
