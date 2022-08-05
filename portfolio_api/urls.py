@@ -18,20 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-# drf-spectacular
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView, SpectacularJSONAPIView
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls'), name='api_endpoints'),
-
-    # Schema and docs
-    path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('schema/json/', SpectacularJSONAPIView.as_view(), name='json_schema'),
-    path('docs/swagger/',
-         SpectacularSwaggerView.as_view(url_name='schema'),
-         name='swagger'),
-    path('docs/redoc/',
-         SpectacularRedocView.as_view(url_name='schema'),
-         name='redoc'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
