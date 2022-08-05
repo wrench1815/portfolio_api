@@ -19,4 +19,4 @@ class Category(models.Model):
 
     def __str__(self):
         """Unicode representation of Category."""
-        pass
+        return str(f'{self.slug}')
