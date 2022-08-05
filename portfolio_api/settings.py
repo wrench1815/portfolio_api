@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     # external
     'corsheaders',
     'rest_framework',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 
     # Project Apps
     'user',
@@ -132,7 +134,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Settings for Whitenoise Compression
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -160,8 +161,8 @@ REST_FRAMEWORK = {
      'rest_framework.authentication.BasicAuthentication'),
 
     #? DRF Schema Class
-    # 'DEFAULT_SCHEMA_CLASS':
-    # 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS':
+    'drf_spectacular.openapi.AutoSchema',
 
     # #TODO: Permisions
     # 'DEFAULT_PERMISSION_CLASSES': (
@@ -192,6 +193,24 @@ REST_FRAMEWORK = {
     # 'DEFAULT_VERSION': '1.0',
     # 'ALLOWED_VERSIONS': ('1.0',),
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+}
+
+# Spectacular Config
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Upasthiti API',
+    'DESCRIPTION': 'API for Upasthiti',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    'SWAGGER_UI_SETTINGS': {
+        'deepLinking': True,
+        'persistAuthorization': True,
+        'displayOperationId': True,
+        'displayRequestDuration': True,
+        'filter': True,
+    },
 }
 
 LOGGING = {
