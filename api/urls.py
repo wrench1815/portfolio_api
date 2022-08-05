@@ -6,6 +6,12 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+# drf-spectacular
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView, SpectacularJSONAPIView
+
+# User
+from user import views as UViews
+
 urlpatterns = [
     # Auth Routes
     path('auth/token/',
@@ -14,4 +20,19 @@ urlpatterns = [
     path('auth/token/refresh/',
          TokenRefreshView.as_view(),
          name='token_refresh'),
+
+    # Schema and docs
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema/json/', SpectacularJSONAPIView.as_view(), name='json_schema'),
+    path('docs/swagger/',
+         SpectacularSwaggerView.as_view(url_name='schema'),
+         name='swagger'),
+    path('docs/redoc/',
+         SpectacularRedocView.as_view(url_name='schema'),
+         name='redoc'),
+
+    # User Routes
+    path('user/',
+         UViews.UserListCreateAPIView.as_view(),
+         name='user_list_create'),
 ]
