@@ -4,9 +4,9 @@ env:
   RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'blog']
   pull_request:
-    branches: ['main']
+    branches: ['main', 'blog']
 
 jobs:
   deploy:
@@ -15,7 +15,7 @@ jobs:
     strategy:
       max-parallel: 4
 
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout
