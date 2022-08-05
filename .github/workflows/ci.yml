@@ -1,5 +1,7 @@
 name: Portfolio CI
 
+env:
+  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 on:
   push:
     branches: ['main']
@@ -8,22 +10,26 @@ on:
 
 jobs:
   deploy:
-      name: Deploy to Railway
-      runs-on: ubuntu-latest
-      
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
 
-        - name: Use Node 16
-          uses: actions/setup-node@v1
-          with:
-            node-version: 16.x
+    if: github.ref == 'refs/heads/main'
 
-        - name: Install Railway
-          run: npm i -g @railway/cli
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.4.2
+        with:
+          ref: main
 
-        - name: Deploy
-          run: railway up
-          env:
-            RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Use Node 16
+        uses: actions/setup-node@v3.4.1
+
+      - name: Install Railway Cli
+        run: |
+          npm i -g @railway/cli
+
+      - name: Deploy
+        run: |
+          RAILWAY_TOKEN=$RAILWAY_TOKEN railway up
